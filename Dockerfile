@@ -1,22 +1,24 @@
 # ── Build stage ───────────────────────────────────────────────
-FROM node:22-alpine AS builder
+FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Install dependencies (including devDependencies for build)
+# Copy manifests first (layer-cache friendly)
 COPY package.json package-lock.json* ./
-RUN npm ci
 
-# Copy source & build
+# Use npm install — handles any dependency version
+RUN npm install --legacy-peer-deps
+
+# Copy source and build
 COPY . .
-RUN npm run build
+RUN node_modules/.bin/vite build
 
 # ── Runtime stage — serve with nginx ─────────────────────────
 FROM nginx:stable-alpine AS runner
 
-# Copy built assets
+# Copy Vite build output
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# nginx config: redirect all 404s to index.html for React Router
+# nginx: proxy /api to backend, SPA fallback for React Router
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
