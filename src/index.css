@@ -1,0 +1,386 @@
+/* ===================== GLOBAL RESET ===================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ===================== ROOT VARS ======================== */
+:root {
+  --bg: #0a0a1a;
+  --bg-card: #1a1a2e;
+  --bg-input: #12122a;
+  --accent: #c0392b;
+  --accent-hover: #e74c3c;
+  --text: #e0e0f0;
+  --text-muted: #8080a0;
+  --border: #2a2a4a;
+  --success: #27ae60;
+  --radius: 8px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.5);
+}
+
+/* ===================== BASE ============================= */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ===================== LAYOUT ========================== */
+.app { display: flex; flex-direction: column; min-height: 100vh; }
+
+.main-content {
+  flex: 1;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+/* ===================== NAVBAR ========================== */
+.navbar {
+  background: #0d0d20;
+  border-bottom: 2px solid var(--accent);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow);
+}
+
+.navbar-brand {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  padding: 14px 0;
+  white-space: nowrap;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 4px;
+}
+
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 16px 20px;
+  border-bottom: 3px solid transparent;
+  font-weight: 500;
+  transition: color 0.2s, border-color 0.2s;
+  font-size: 0.95rem;
+}
+
+.nav-link:hover { color: var(--text); border-bottom-color: var(--border); }
+.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ===================== CARDS =========================== */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+/* ===================== FORMS =========================== */
+.form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+
+label { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+
+input, select, textarea {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+input::placeholder { color: var(--text-muted); }
+select option { background: var(--bg-card); }
+
+/* ===================== BUTTONS ========================= */
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 18px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+button:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--accent-hover); }
+
+.btn-secondary {
+  background: var(--border);
+  color: var(--text);
+}
+.btn-secondary:hover { background: #3a3a5a; }
+
+.btn-sm { padding: 6px 12px; font-size: 0.82rem; }
+
+/* ===================== PAGE HEADERS ==================== */
+.page-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ===================== MOVIE CARDS ===================== */
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.movie-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.2s;
+}
+
+.movie-card:hover { border-color: var(--accent); }
+
+.movie-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.movie-card-meta {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  display: flex;
+  gap: 12px;
+}
+
+.movie-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.watched-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 0.88rem;
+  color: var(--text);
+}
+
+.watched-label input[type="checkbox"] { accent-color: var(--success); width: 16px; height: 16px; cursor: pointer; }
+
+/* ===================== PREREQUISITE EDITOR ============= */
+.prereq-editor {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-top: 10px;
+}
+
+.prereq-editor-title { font-size: 0.9rem; font-weight: 600; color: var(--accent); margin-bottom: 10px; }
+
+.prereq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 12px;
+}
+
+.prereq-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: var(--text);
+}
+
+.prereq-item input[type="checkbox"] { accent-color: var(--accent); width: 15px; height: 15px; cursor: pointer; }
+
+/* ===================== REWATCH ========================= */
+.rewatch-layout { display: flex; flex-direction: column; gap: 24px; }
+
+.rewatch-controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.rewatch-controls select { flex: 1; min-width: 200px; }
+
+.rewatch-list { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+
+.rewatch-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+}
+
+.rewatch-item.watched { border-color: var(--success); opacity: 0.75; }
+
+.rewatch-num {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 28px;
+  text-align: center;
+}
+
+.rewatch-info { flex: 1; }
+.rewatch-title { font-weight: 600; font-size: 0.95rem; }
+.rewatch-runtime { font-size: 0.8rem; color: var(--text-muted); }
+
+.rewatch-status { font-size: 1.3rem; }
+
+/* ===================== PROGRESS BAR ==================== */
+.progress-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+
+.progress-text {
+  font-size: 0.95rem;
+  color: var(--text);
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.progress-track {
+  background: var(--bg-input);
+  border-radius: 100px;
+  height: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progress-fill {
+  background: var(--accent);
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.4s ease;
+}
+
+.progress-remaining { font-size: 0.82rem; color: var(--text-muted); }
+
+/* ===================== BOOKING ========================= */
+.booking-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 700px) {
+  .booking-layout { grid-template-columns: 1fr; }
+}
+
+.booking-section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+
+.cinemas-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+
+.cinema-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 0.88rem;
+}
+
+.cinema-item-name { font-weight: 600; }
+.cinema-item-bundles { color: var(--text-muted); font-size: 0.8rem; }
+
+.booking-controls { display: flex; flex-direction: column; gap: 12px; }
+.booking-controls select, .booking-controls input { width: 100%; }
+
+.booking-result {
+  margin-top: 16px;
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 16px;
+  border: 1px solid var(--border);
+}
+
+.booking-result.success { border-color: var(--success); }
+.booking-result.failure { border-color: var(--accent); }
+
+.booking-result-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.breakdown-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-top: 8px; }
+.breakdown-table th, .breakdown-table td {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.breakdown-table th { color: var(--text-muted); font-weight: 600; }
+
+/* ===================== UTILS =========================== */
+.error-msg {
+  background: rgba(192, 57, 43, 0.15);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  color: #ff7675;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  margin-top: 8px;
+}
+
+.loading-msg { color: var(--text-muted); font-style: italic; padding: 20px 0; text-align: center; }
+
+.empty-msg { color: var(--text-muted); padding: 16px 0; text-align: center; font-style: italic; }
+
+.form-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.form-row .form-group { flex: 1; min-width: 120px; }
